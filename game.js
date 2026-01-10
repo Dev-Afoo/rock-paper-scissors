@@ -1,106 +1,174 @@
-// Score declared in global scope so that our functions can read them
-// let humanScore = 0;
-// let computerScore = 0;
-// Above moved to playGame function
+let humanScore = 0;
+let computerScore = 0;
+
 
 function getComputerChoice() {
-    // Rock = 0, Paper = 1, Scissors = 2
+// Rock = 0, Paper = 1, Scissors = 2
 
-    let randomNum = Math.floor((Math.random() * 3));
-    // Math.random() returns a decimal between 0 and 1. Multiply this by 3 and floor it to get any int less than 3.
-    switch (randomNum) {
-        case 0:
-            // console.log("rock");
-            return "rock";
-        case 1:
-            // console.log("paper");
-            return "paper";
-        case 2:
-            // console.log("scissors");
-            return "scissors";
-    }
+let randomNum = Math.floor((Math.random() * 3));
+// Math.random() returns a decimal between 0 and 1. Multiply this by 3 and floor it to get any int less than 3.
+switch (randomNum) {
+    case 0:
+        // console.log("rock");
+        return "rock";
+    case 1:
+        // console.log("paper");
+        return "paper";
+    case 2:
+        // console.log("scissors");
+        return "scissors";
+}
 }
 
-function getHumanChoice() {
-    // Prompts user for input
-    let input = prompt("Select your weapon:\nRock\nPaper\nScissors"); 
-    // Check for if the user doesn't enter anything or clicks the cancel on prompt
-    if (input === "" || input === null) {
-        console.log("No weapon was chosen, You gonna fight with your fists?!");
-    }
-    return input; 
+function getHumanChoice(choice) {
+// Prompts user for input
+let input = choice;
+// Check for if the user doesn't enter anything or clicks the cancel on prompt
+// if (input === "" || input === null) {
+//     console.log("No weapon was chosen, You gonna fight with your fists?!");
+// }
+return input; 
 }
 
-const playGame = (() => {
+// const playGame = (() => {
 
-    let humanScore = 0;
-    let computerScore = 0;
-    let roundCount = 0;
-    
-    function playRound(humanChoice, computerChoice) {
-        let result = "";
+// let roundCount = 0;
 
-        // Start by converting human choice to all lowercase, this allows for case-insensitivity
-        humanChoice = humanChoice.toLowerCase();
-        // Check draw condition
-        if (humanChoice === computerChoice) {
-            result = "DRAW 🥱";  
-        }
-        // If choices are not the same, check for the winner
-        else if (humanChoice === 'rock') {
-            if (computerChoice === 'paper') {
-                result = "LOSE 😥";
-                computerScore += 1;
-            } else {
-                result = "WIN ✨";
-                humanScore += 1;
-            }
-        }
-        else if (humanChoice === 'paper') {
-            if (computerChoice === 'scissors') {
-                result = "LOSE 😥";
-                computerScore += 1;
-            } else {
-                result = "WIN ✨";
-                humanScore += 1;
-            }
-        }
-        else if (humanChoice === 'scissors') {
-            if (computerChoice === 'rock') {
-                result = "LOSE 😥";
-                computerScore += 1;
-            } else {
-                result = "WIN ✨";
-                humanScore += 1;
-            }
-        }
-        return console.log(result);   
+function playRound(humanChoice, computerChoice) {
+    let result = "";
+
+    // Start by converting human choice to all lowercase, this allows for case-insensitivity
+    humanChoice = humanChoice.toLowerCase();
+    // Check draw condition
+    if (humanChoice === computerChoice) {
+        result = "DRAW 🥱";  
     }
+    // If choices are not the same, check for the winner
+    else if (humanChoice === 'rock') {
+        if (computerChoice === 'paper') {
+            result = "LOSE 😥";
+            computerScore += 1;
+        } else {
+            result = "WIN ✨";
+            humanScore += 1;
+        }
+    }
+    else if (humanChoice === 'paper') {
+        if (computerChoice === 'scissors') {
+            result = "LOSE 😥";
+            computerScore += 1;
+        } else {
+            result = "WIN ✨";
+            humanScore += 1;
+        }
+    }
+    else if (humanChoice === 'scissors') {
+        if (computerChoice === 'rock') {
+            result = "LOSE 😥";
+            computerScore += 1;
+        } else {
+            result = "WIN ✨";
+            humanScore += 1;
+        }
+    }
+    return console.log(result);   
+}
+
+function playGame(buttonVal) {
+    let humanChoice = buttonVal;
+    let computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice);
+}
+
+
+// Creates the score displays and appends them to the scoreboard
+const scoreB = document.querySelector(".scoreboard");
+const displayPlayer = document.createElement("div");
+const displayComputer = document.createElement("div");
+displayPlayer.textContent = "Nil";
+displayComputer.textContent = "Nil";
+scoreB.appendChild(displayPlayer);
+scoreB.appendChild(displayComputer);
+
+// Create references to each HTML button choice
+const rockBtn = document.querySelector("#btn1");
+const paperBtn = document.querySelector('#btn2');
+const scissorsBtn = document.querySelector('#btn3');
+
+// Add an onclick event listener for each button
+rockBtn.addEventListener('click', ()=> {
+    // After buttom press, call the game with rock
+    playGame('rock');
+    // Update score to the DOM
+    scoreB.removeChild(displayPlayer);    // Remove displays from scoreboard
+    scoreB.removeChild(displayComputer);
+    displayPlayer.textContent = `Wins: ${humanScore}`;     // Update score with .textContent
+    displayComputer.textContent = `CPU Wins: ${computerScore}`;
+    scoreB.appendChild(displayPlayer);      // Append back to scoreboard
+    scoreB.appendChild(displayComputer);    
+
+});
+paperBtn.addEventListener('click', () => {
+    // After button press, call the game with paper
+    playGame('paper');
+    //Update score to the DOM
+    scoreB.removeChild(displayPlayer);    // Remove displays from scoreboard
+    scoreB.removeChild(displayComputer);
+    displayPlayer.textContent = `Wins: ${humanScore}`;     // Update score with .textContent
+    displayComputer.textContent = `CPU Wins: ${computerScore}`;
+    scoreB.appendChild(displayPlayer);      // Append back to scoreboard
+    scoreB.appendChild(displayComputer);
+});
+scissorsBtn.addEventListener('click', () => {
+    // After button press, call the game with scissors
+    playGame('scissors');
+    // Update score to the DOM
+    scoreB.removeChild(displayPlayer);    // Remove displays from scoreboard
+    scoreB.removeChild(displayComputer);
+    displayPlayer.textContent = `Wins: ${humanScore}`;      // Update score with .textContent
+    displayComputer.textContent = `CPU Wins: ${computerScore}`;
+    scoreB.appendChild(displayPlayer);      // Append back to scoreboard
+    scoreB.appendChild(displayComputer);
+});
+
+
+
+
+
+
+
+
+
+
+
+
     // Play the round 5 times
-    for(let i = 0; i < 5; i++) {
-        // Attempt to retrieve choices for each round
-        let humanChoice = getHumanChoice();
-        let computerChoice = getComputerChoice();
-        // Pass choices to determine score
-        playRound(humanChoice, computerChoice);
-        // Display score after each round so player can keep track
-        console.log(humanScore);
-        console.log(computerScore); 
-        roundCount += 1; 
+    // for(let i = 0; i < 5; i++) {
+    //     // Attempt to retrieve choices for each round
+    //     let humanChoice = getHumanChoice();
+    //     let computerChoice = getComputerChoice();
+    //     // Pass choices to determine score
+    //     playRound(humanChoice, computerChoice);
+    //     // Display score after each round so player can keep track
+    //     console.log(humanScore);
+    //     console.log(computerScore); 
+    //     roundCount += 1; 
 
         // If we are on the last round, compare round scores and determine a winner
-        if(roundCount === 5) {
-            switch (true){
-                case humanScore === computerScore:
-                    console.log("The Game is Tied");
-                case humanScore < computerScore:
-                    console.log("CPU WINS 😫⚡");
-                case humanScore > computerScore:
-                    console.log("CONGRATULATIONS, YOU WIN 🎉🎉🎊")
-            }
-        }
-    }
-})();
+        // if(roundCount === 5) {
+        //     switch (true){
+        //         case humanScore === computerScore:
+        //             console.log("The Game is Tied");
+        //         case humanScore < computerScore:
+        //             console.log("CPU WINS 😫⚡");
+        //         case humanScore > computerScore:
+        //             console.log("CONGRATULATIONS, YOU WIN 🎉🎉🎊")
+        //     }
+        // }
+    // }
+// })();
+
+
 
 
 
