@@ -71,13 +71,48 @@ function playRound(humanChoice, computerChoice) {
             humanScore += 1;
         }
     }
-    return console.log(result);   
+    // Updated to allow for consolelog round result to be displayed in DOM
+    const roundResult = document.querySelector(".roundresult");
+    roundResult.textContent = " ";
+    const displayResult = document.createElement("div");
+    displayResult.textContent = `${result}`;
+    roundResult.appendChild(displayResult);
+
+    return console.log(result);   // result is returned to the console
+}
+
+function whoIsWinner() {
+    // Select the corresponding HTML div so we can add to it
+    const winResult = document.querySelector(".winresult");
+    if (humanScore === 5) {
+        // Create display for win result and append with win result if player wins
+        const humanWin = document.createElement("div");
+        humanWin.textContent = "YOU WIN!!! ";
+        winResult.appendChild(humanWin);
+    } else if (computerScore === 5) {
+        // Create display for win result and append with win result if computer wins
+        const computerWin = document.createElement("div");
+        computerWin.textContent = "CPU WINS!!!";
+        winResult.appendChild(computerWin);
+    } 
 }
 
 function playGame(buttonVal) {
-    let humanChoice = buttonVal;
+    let humanChoice = buttonVal;                // humanChoice will be set to the button that was pressed
     let computerChoice = getComputerChoice();
-    playRound(humanChoice, computerChoice);
+    // Target 'roundshinkou' and update it to display each player's choice
+    const playerSentaku = document.querySelector(".playersentaku");
+    const computerSentaku = document.querySelector(".computersentaku");
+    playerSentaku.textContent = " ";        // Clear the round choices by clearing all childNodes (Clean the display)
+    computerSentaku.textContent = " ";      // childNodes are treated as textContent or the parent so this works!
+    const humanShinkou = document.createElement("div");
+    const computerShinkou = document.createElement("div");
+    humanShinkou.textContent = `${humanChoice}`;
+    computerShinkou.textContent = `${computerChoice}`;
+    playerSentaku.appendChild(humanShinkou);        // Add display for the choices as visual displays by appending
+    computerSentaku.appendChild(computerShinkou);
+
+    playRound(humanChoice, computerChoice);     // Compare player choice to the CPU by playing the round
 }
 
 
@@ -105,7 +140,8 @@ rockBtn.addEventListener('click', ()=> {
     displayPlayer.textContent = `Wins: ${humanScore}`;     // Update score with .textContent
     displayComputer.textContent = `CPU Wins: ${computerScore}`;
     scoreB.appendChild(displayPlayer);      // Append back to scoreboard
-    scoreB.appendChild(displayComputer);    
+    scoreB.appendChild(displayComputer);   
+    whoIsWinner();                          // Checks current score, if 5 pts reached by either one, declare winner
 
 });
 paperBtn.addEventListener('click', () => {
@@ -118,6 +154,7 @@ paperBtn.addEventListener('click', () => {
     displayComputer.textContent = `CPU Wins: ${computerScore}`;
     scoreB.appendChild(displayPlayer);      // Append back to scoreboard
     scoreB.appendChild(displayComputer);
+    whoIsWinner();                          // Checks current score, if 5 pts reached by either one, declare winner
 });
 scissorsBtn.addEventListener('click', () => {
     // After button press, call the game with scissors
@@ -129,16 +166,8 @@ scissorsBtn.addEventListener('click', () => {
     displayComputer.textContent = `CPU Wins: ${computerScore}`;
     scoreB.appendChild(displayPlayer);      // Append back to scoreboard
     scoreB.appendChild(displayComputer);
+    whoIsWinner();                          // Checks current score, if 5 pts reached by either one, declare winner
 });
-
-
-
-
-
-
-
-
-
 
 
 
