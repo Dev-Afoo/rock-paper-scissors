@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
     <script src="game.js" defer></script>
+    <!-- Added Bootstrap for premade styling and buttons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
+    <div class="banner-top">
+        <h1>Rock Paper Scissors</h1>
+    </div>
     <div class="scoreboard">
 
     </div>
@@ -15,15 +20,37 @@
     <p>Click on a button to start the game! First to five points win!</p>
 
     <div class="btn-container">
-        <button id="btn1" alt="A button for the selection Rock" data-weapon="rock">Rock</button>
-        <button id="btn2" alt="A button for the selection Paper"data-weapon="paper">Paper</button>
-        <button id="btn3" alt="A button for the selection Scissors" data-weapon="scissors">Scissors</button>
+        <div class="card" id="rock">
+            <img src="/rock.png" class="card-img-top" alt="Picture of a rock">
+            <div class="card-body">
+                <button class="btn btn-primary btn-lg" id="btn1" alt="A button for the selection Rock" data-weapon="rock">Rock</button>
+            </div>
+        </div>
+        <div class="card" id="paper">
+            <img src="/paper.png" class="card-img-top" alt="Picture of a piece of paper">
+            <div class="card-body">
+                <button class="btn btn-primary btn-lg" id="btn2" alt="A button for the selection Paper"data-weapon="paper">Paper</button>
+            </div>
+        </div>
+        <div class="card" id="scissors">
+            <img src="/scissors.png" class="card-img-top" alt="Picture of a pair of scissors">
+            <div class="card-body">
+                <button class="btn btn-primary btn-lg" id="btn3" alt="A button for the selection Scissors" data-weapon="scissors">Scissors</button>
+            </div>
+        </div>
+        <!-- <button class="btn btn-primary btn-lg" id="btn1" alt="A button for the selection Rock" data-weapon="rock">Rock</button> -->
+        <!-- <button class="btn btn-primary btn-lg" id="btn2" alt="A button for the selection Paper"data-weapon="paper">Paper</button> -->
+        <!-- <button class="btn btn-primary btn-lg" id="btn3" alt="A button for the selection Scissors" data-weapon="scissors">Scissors</button> -->
+
+    </div>
+    <div class="round-history-container">
+        <div class="label">YOU Selected</div>
+        <div class="label">CPU Selected</div>
     </div>
     <div class="round-history">
         <div class="playersentaku"></div>
         <div class="computersentaku"></div>
     </div>
-
     <div class="roundresult"></div>
 
     <div class="winresult"></div>
